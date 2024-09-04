@@ -36,3 +36,5 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 }
+// Export it for build scripts.
+pub usingnamespace @import("fluent.zig");
