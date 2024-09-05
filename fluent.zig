@@ -236,7 +236,7 @@ pub fn bind(
     comptime function: anytype,
 ) BindRetun(bind_tuple, function) {
     const bind_count = comptime tupleSize(bind_tuple);
-    const total_count = comptime @typeInfo(@TypeOf(function)).Fn.params.len;
+    const total_count = comptime @typeInfo(@TypeOf(function)).@"fn".params.len;
 
     if (comptime total_count - bind_count == 1) {
         return struct {
@@ -257,7 +257,7 @@ fn BindRetun(
     comptime bind_tuple: anytype,
     comptime function: anytype,
 ) type {
-    const total_count = comptime @typeInfo(@TypeOf(function)).Fn.params.len;
+    const total_count = comptime @typeInfo(@TypeOf(function)).@"fn".params.len;
     const bind_count = comptime tupleSize(bind_tuple);
 
     if (comptime total_count < bind_count)
@@ -989,7 +989,7 @@ pub fn GeneralMutableBackend(comptime Self: type) type {
 
         /// map - transforms every elment in the acquired slice with a given unary function
         pub fn map(self: Self, unary_func: anytype) Self {
-            const unary_call = comptime if (@typeInfo(@TypeOf(unary_func)) == .Fn)
+            const unary_call = comptime if (@typeInfo(@TypeOf(unary_func)) == .@"fn")
                 unary_func
             else
                 Chain(unary_func).call;
